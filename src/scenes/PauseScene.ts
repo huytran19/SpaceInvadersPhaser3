@@ -21,7 +21,7 @@ export default class PauseScene extends Phaser.Scene {
 
   create() {
     const { width, height } = this.scale;
-
+    const bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
     this.container = this.add.container(0, 0);
     //   // new game container
     this.newGameBox = this.add
@@ -29,10 +29,10 @@ export default class PauseScene extends Phaser.Scene {
       .setOrigin(0.5, 0.5)
       .setScale(0.4);
     this.newGameText = this.add
-      .bitmapText(this.newGameBox.x, this.newGameBox.y, 'font', 'NEW GAME', 8)
+      .bitmapText(this.newGameBox.x, this.newGameBox.y, 'font', 'QUIT', 8)
       .setOrigin(0.5, 0.5);
 
-    this.newGameContainer = this.add.container(0, 0, [
+    this.newGameContainer = this.add.container(0, 40, [
       this.newGameBox,
       this.newGameText,
     ]);
@@ -46,7 +46,7 @@ export default class PauseScene extends Phaser.Scene {
       })
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
         this.newGameBox.setTint(0xffffff);
-        this.startNewGame();
+        this.quit();
       });
 
     //   // sound container
@@ -61,6 +61,9 @@ export default class PauseScene extends Phaser.Scene {
       .image(this.soundBox.x + 24, this.soundBox.y, 'check')
       .setOrigin(0.5, 0.5)
       .setScale(0.35);
+    if (this.registry.values.mute) {
+      this.soundMute.setTexture('cross');
+    }
     this.soundContainer = this.add.container(0, 20, [
       this.soundBox,
       this.soundText,
@@ -88,7 +91,7 @@ export default class PauseScene extends Phaser.Scene {
       .bitmapText(this.newGameBox.x, this.newGameBox.y, 'font', 'RESUME', 8)
       .setOrigin(0.5, 0.5);
 
-    this.resumeContainer = this.add.container(0, 40, [
+    this.resumeContainer = this.add.container(0, 0, [
       this.resumeBox,
       this.resumeText,
     ]);
@@ -128,13 +131,15 @@ export default class PauseScene extends Phaser.Scene {
     this.sound.mute = this.registry.values.mute;
   }
 
-  private startNewGame() {
+  private quit() {
     this.scene.stop('game-scene');
     this.scene.stop('pause-scene');
     this.scene.start('menu-scene');
   }
 
   private unpauseGame() {
+    this.scene.run('HUDScene');
+    this.scene.setVisible(true, 'game-scene');
     this.scene.resume('game-scene');
     this.scene.sleep('pause-scene');
   }

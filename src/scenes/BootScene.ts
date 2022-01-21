@@ -67,11 +67,16 @@ export default class BootScene extends Phaser.Scene {
     this.load.image('cross', 'ui-pack/cross.png');
     this.load.image('left', 'ui-pack/left.png');
     this.load.image('right', 'ui-pack/right.png');
+    this.load.image('square', 'ui-pack/square_box.png');
+    this.load.image('line', 'ui-pack/line.png');
 
     this.load.audio('sound', 'sound/soundtrack.mp3');
+    this.load.image('bg', 'bg.jpg');
   }
 
-  init() {}
+  init() {
+    this.initGlobalDataManager();
+  }
 
   update(): void {
     this.scene.start('menu-scene');
@@ -87,5 +92,10 @@ export default class BootScene extends Phaser.Scene {
       20
     );
     this.progressBar = this.add.graphics();
+  }
+
+  private initGlobalDataManager(): void {
+    this.registry.set('mute', false);
+    this.registry.set('highscore', 0);
   }
 }

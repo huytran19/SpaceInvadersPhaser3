@@ -145,8 +145,8 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   private addPoints(): void {
-    let getCurrentPoints = this.scene.registry.get('points');
-    this.scene.registry.set('points', getCurrentPoints + this.valueKill);
-    this.scene.events.emit('pointsChanged');
+    let getCurrentPoints = this.scene.registry.get('scores');
+    this.scene.registry.set('scores', getCurrentPoints + this.valueKill);
+    this.scene.events.emit('scoresChanged');
   }
 }

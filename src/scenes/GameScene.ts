@@ -14,6 +14,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   init(): void {
+    const bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
     this.enemies = this.add.group({ runChildUpdate: true });
     this.pauseKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.ESC
@@ -30,6 +31,7 @@ export default class GameScene extends Phaser.Scene {
       y: this.sys.canvas.height - 40,
       texture: 'player',
     });
+    this.player.setTint(0x00ffff);
 
     // if you want to make it random:
     // let enemyTypes = ["octopus", "crab", "squid"];
@@ -92,8 +94,8 @@ export default class GameScene extends Phaser.Scene {
       this.checkCollisions();
     }
 
-    if (this.registry.get('lives') < 0 || this.enemies.getLength() === 0) {
-      this.scene.start('menu-scene');
+    if (this.registry.get('lives') == 0 || this.enemies.getLength() === 0) {
+      this.scene.start('gameover-scene');
       this.scene.stop('HUDScene');
     }
   }

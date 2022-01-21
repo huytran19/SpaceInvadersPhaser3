@@ -27,6 +27,7 @@ export default class MenuScene extends Phaser.Scene {
   create() {
     const { width, height } = this.scale;
     this.sound.stopAll();
+    const bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
     this.add
       .bitmapText(width / 2, height / 2 - 60, 'font', 'SPACE INVADERS', 12)
       .setOrigin(0.5, 0.5);
@@ -63,6 +64,7 @@ export default class MenuScene extends Phaser.Scene {
       .image(0, 0, 'box')
       .setOrigin(0.5, 0.5)
       .setScale(0.4);
+
     this.soundText = this.add
       .bitmapText(this.soundBox.x - 12, this.soundBox.y, 'font', 'SOUND', 8)
       .setOrigin(0.5, 0.5);
@@ -156,10 +158,7 @@ export default class MenuScene extends Phaser.Scene {
     this.container.add(this.levelContainer);
 
     // display to center
-    Phaser.Display.Align.In.Center(
-      this.container,
-      this.add.zone(width * 0.5, height * 0.5, width, height)
-    );
+    Phaser.Display.Align.In.Center(this.container, bg);
   }
 
   private toggleSound() {
@@ -196,8 +195,7 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   private initGlobalDataManager(): void {
-    this.registry.set('points', 0);
-    this.registry.set('mute', false);
+    this.registry.set('scores', 0);
     this.registry.set('lives', 3);
     this.registry.set('level', 1);
   }

@@ -5,6 +5,7 @@ import MenuScene from './scenes/MenuScene';
 import GameScene from './scenes/GameScene';
 import PauseScene from './scenes/PauseScene';
 import HUDScene from './scenes/HudScene';
+import GameoverScene from './scenes/GameoverScene';
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -17,7 +18,7 @@ const config: Phaser.Types.Core.GameConfig = {
       gravity: { y: 0 },
     },
   },
-  scene: [BootScene, MenuScene, GameScene, PauseScene, HUDScene],
+  scene: [BootScene, MenuScene, GameScene, PauseScene, HUDScene, GameoverScene],
   backgroundColor: '#f5cc69',
 };
 
